@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  web:
+#      hostname: localhost
+      container_name: wit-ui
+      build: wit-ui
+      image: juhijariwala/wit-ui
+      ports:
+        - 80:80
+      logging:
+        driver: awslogs
+        options:
+          awslogs-group: tutorial
+          awslogs-region: ap-south-1
+          awslogs-stream-prefix: wit-ui
+#      depends_on:
+#        - catalog
+#  catalog-db:
+#           container_name: catalog-db
+#           image: "mysql/mysql-server"
+#           ports:
+#             - 3306:3306
+#           volumes:
+#           - type: bind
+#             source: ./wit-catalog/
+#             target: /docker-entrypoint-initdb.d/
+#           environment:
+#             - MYSQL_USER=catalog
+#             - MYSQL_PASSWORD=catalog
+#             - MYSQL_DATABASE=catalog
+#  catalog:
+#      container_name: catalog
+#      image: "java:8"
+#      ports:
+#        - "8091:8091"
+#      volumes:
+#        - ./wit-catalog/target/wit-catalog.jar:/usr/share/wit-catalog.jar
+#      entrypoint: java -jar /usr/share/wit-catalog.jar --server.port=8091
+#      depends_on:
+#        - catalog-db
