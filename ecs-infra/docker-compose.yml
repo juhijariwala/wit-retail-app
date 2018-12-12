@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-#      hostname: localhost
+      hostname: localhost
       container_name: wit-ui
       build: wit-ui
       image: juhijariwala/wit-ui
