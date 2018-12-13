@@ -9,7 +9,7 @@ services:
     container_name: wit-catalog-db
     image: demoaccount/wit-retail-demo_db
     ports:
-      - "3300:3306"
+      - "3306:3306"
   app:
     container_name: wit-catalog-app
     image: demoaccount/wit-retail-demo_app
