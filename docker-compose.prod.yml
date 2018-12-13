@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     container_name: wit-ui
-    build: wit-ui
     image: demoaccount/wit-retail-demo_web
     ports:
       - "80:80"
