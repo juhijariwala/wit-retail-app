@@ -1,59 +1,22 @@
-version: '3.2'
-
+version: '3'
 services:
   web:
-      hostname: localhost
-      container_name: wit-ui
-      build: wit-ui
-      image: juhijariwala/wit-ui
-      ports:
-        - 80:80
-      depends_on:
-        - catalog
-  catalog-db:
-       container_name: catalog-db
-       image: "mysql/mysql-server"
-       ports:
-         - 3306:3306
-       volumes:
-       - type: bind
-         source: ./wit-catalog/
-         target: /docker-entrypoint-initdb.d/
-       environment:
-         - MYSQL_USER=catalog
-         - MYSQL_PASSWORD=catalog
-         - MYSQL_DATABASE=catalog
-  catalog:
-      container_name: catalog
-      image: "java:8"
-      ports:
-        - "8091:8091"
-      volumes:
-        - ./wit-catalog/target/wit-catalog.jar:/usr/share/wit-catalog.jar
-      entrypoint: java -jar /usr/share/wit-catalog.jar --server.port=8091
-      depends_on:
-        - catalog-db
-  customer-service :
-      container_name: customer
-      image: java:8
-      depends_on:
-      - customer-db
-      ports:
-      - 8092:8092
-      volumes:
-        - ./wit-customer/target/wit-customer.jar:/usr/share/wit-customer.jar
-      entrypoint: java -jar /usr/share/wit-customer.jar --server-port 8092
-  customer-db:
-    container_name: app-customer-db
-    image: postgres:latest
-    environment:
-    - POSTGRES_USER=customer
-    - POSTGRES_PASSWORD=customer
-    - POSTGRES_DB=customer
+    container_name: wit-ui
+    build: wit-ui
+    image: demoaccount/wit-retail-demo_web
     ports:
-    - 5432:5432
-    volumes:
-      - ./wit-customer/setup.sh:/docker-entrypoint-initdb.d/init-user-db.sh
-      - customer-db:/var/lib/postgresql/data
-volumes:
-  customer-db: {}
+      - "80:80"
+  db:
+    container_name: wit-catalog-db
+    build: wit-catalog/docker/db/
+    image: demoaccount/wit-retail-demo_db
+    ports:
+      - "3300:3306"
+  app:
+    container_name: wit-catalog-app
+    build:
+      context: wit-catalog
+      dockerfile: ./docker/app/Dockerfile
+    image: demoaccount/wit-retail-demo_app
+    ports:
+      - "8091:8080"

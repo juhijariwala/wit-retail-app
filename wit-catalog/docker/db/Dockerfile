@@ -1,7 +1,9 @@
-FROM java:8
+FROM mysql/mysql-server
 
-COPY ../../target/wit-catalog.jar /usr/share/service/wit-catalog.jar
+ENV MYSQL_USER catalog
+ENV MYSQL_PASSWORD catalog
+ENV MYSQL_DATABASE catalog
 
-WORKDIR /usr/share/service
+COPY ./seed.sql /docker-entrypoint-initdb.d/
 
-CMD java -jar wit-catalog.jar --server.port=8091
+EXPOSE 3306
