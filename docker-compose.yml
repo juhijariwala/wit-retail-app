@@ -6,17 +6,31 @@ services:
     image: demoaccount/wit-retail-demo_web
     ports:
       - "80:80"
-  db:
+  catalog-db:
     container_name: wit-catalog-db
     build: wit-catalog/docker/db/
-    image: demoaccount/wit-retail-demo_db
+    image: demoaccount/wit-retail-demo_catalog_db
     ports:
       - "3300:3306"
-  app:
+  catalog-app:
     container_name: wit-catalog-app
     build:
       context: wit-catalog
       dockerfile: ./docker/app/Dockerfile
-    image: demoaccount/wit-retail-demo_app
+    image: demoaccount/wit-retail-demo_catalog_app
     ports:
       - "8091:8080"
+  customer-db:
+      container_name: wit-customer-db
+      build: wit-customer/docker/db/
+      image: demoaccount/wit-retail-demo_customer_db
+      ports:
+        - "5432:5432"
+  customer-app:
+      container_name: wit-customer-app
+      build:
+        context: wit-customer
+        dockerfile: ./docker/app/Dockerfile
+      image: demoaccount/wit-retail-demo_customer_app
+      ports:
+        - "8092:8080"

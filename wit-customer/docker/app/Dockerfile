@@ -1,7 +1,7 @@
 FROM java:8
 
-COPY ../../target/wit-customer.jar /usr/share/service/wit-customer.jar
+WORKDIR /usr/service
 
-WORKDIR /usr/share/service
+COPY ./target/wit-customer.jar .
 
-CMD java -jar /usr/share/service/wit-customer.jar --server.port=8092
+CMD java -jar /usr/service/wit-customer.jar
